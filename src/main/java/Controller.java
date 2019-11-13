@@ -16,6 +16,13 @@ public class Controller {
         return preparedSt.executeUpdate() != 0;
     }
 
+    public static boolean addTaskToDb(String summary, String assignee, String startDate, String endDate) throws SQLException {
+        Date start = stringDateToSqlDate(startDate);
+        Date end = stringDateToSqlDate(endDate);
+        addTask(summary, assignee, start, end);
+        return true;
+    }
+
     public static int countOfRecords() throws SQLException {
         int count = 0;
         Connection conn = DataBase.getDb().connection;
@@ -57,12 +64,19 @@ public class Controller {
         return sqlDate;
     }
 
-//    public static ResultSet getTasksByFilters(String assignee, Date startDate, Date endDate) throws SQLException {
-//        Connection conn = DataBase.getDb().connection;
-//        PreparedStatement preparedSt = null;
-//        ResultSet result;
-//
-//        String q = null;
+    public static ResultSet getTasksByFilters(String assignee, Date startDate, Date endDate) throws SQLException {
+        Connection conn = DataBase.getDb().connection;
+        PreparedStatement preparedSt = null;
+        ResultSet result;
+
+        String q = null;
+        q = "SELECT * FROM TASKS WHERE ASSIGNEE=? AND STARTDATE>=? AND ENDDATE<=?";
+        preparedSt = conn.prepareStatement(q);
+        preparedSt.setString(1, assignee);
+        preparedSt.setDate(2, startDate);
+        preparedSt.setDate(3, endDate);
+
+
 //        if (assignee == null) {
 //            if (date == null) {
 //                q = "SELECT * FROM TEST";
@@ -88,9 +102,9 @@ public class Controller {
 //                preparedSt.setString(4, String.valueOf(date.getYear()));
 //            }
 //        }
-//        result = preparedSt.executeQuery();
-//
-//        return result;
-//    }
+        result = preparedSt.executeQuery();
+
+        return result;
+    }
 
 }

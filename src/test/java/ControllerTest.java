@@ -101,7 +101,7 @@ public class ControllerTest {
         try {
             Controller.addTaskToDb(source1, source2, source3, source4);
             Controller.addTaskToDb(source1, source2, "13/11/2019", "21/11/2019");
-            result = Controller.getTasksByFilters(source2, start, end);
+            result = Controller.getTasksByFilters(null, start, end);
 
             while (result.next()) {
                 System.out.println(result.getString(3));

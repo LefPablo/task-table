@@ -38,18 +38,6 @@ public class Controller {
         return count;
     }
 
-//    public static ResultSet getAllRecords() throws SQLException {
-//        Connection conn = DataBase.getDb().connection;
-//        Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//        ResultSet result = st.executeQuery("SELECT * FROM TEST");
-//
-//        while(result.next()) {
-//            System.out.println(result.getString("TIMESTAMP"));
-//        }
-//
-//        return result;
-//    }
-
     public static Date stringDateToSqlDate (String source) {
         String dataFormat = "dd/MM/yyyy";
         Date sqlDate = null;
@@ -69,39 +57,37 @@ public class Controller {
         PreparedStatement preparedSt = null;
         ResultSet result;
 
-        String q = null;
-        q = "SELECT * FROM TASKS WHERE ASSIGNEE=? AND STARTDATE>=? AND ENDDATE<=?";
+        String q = "SELECT * FROM TASKS";
+        boolean isMultiCondition = false;
+        if (assignee != null || startDate != null || endDate != null) {
+            q += " WHERE";
+            if (assignee != null) {
+                if (isMultiCondition) {
+                    q += " AND";
+                } else {
+                    isMultiCondition = true;
+                }
+                q += (" ASSIGNEE='" + assignee + "'");
+            }
+            if (startDate != null) {
+                if (isMultiCondition) {
+                    q += " AND";
+                } else {
+                    isMultiCondition = true;
+                }
+                q += (" STARTDATE>='" + startDate + "'");
+            }
+            if (endDate != null) {
+                if (isMultiCondition) {
+                    q += " AND";
+                } else {
+                    isMultiCondition = true;
+                }
+                q += (" ENDDATE<='" + endDate + "'");
+            }
+        }
+        System.out.println(q);
         preparedSt = conn.prepareStatement(q);
-        preparedSt.setString(1, assignee);
-        preparedSt.setDate(2, startDate);
-        preparedSt.setDate(3, endDate);
-
-
-//        if (assignee == null) {
-//            if (date == null) {
-//                q = "SELECT * FROM TEST";
-//                preparedSt = conn.prepareStatement(q);
-//            } else {
-//                q = "SELECT * FROM TEST WHERE DAY(TIMESTAMP)=? AND MONTH(TIMESTAMP)=? AND YEAR(TIMESTAMP)=?";
-//                preparedSt = conn.prepareStatement(q);
-//                preparedSt.setString(1, String.valueOf(date.getDayOfMonth()));
-//                preparedSt.setString(2, String.valueOf(date.getMonthValue()));
-//                preparedSt.setString(3, String.valueOf(date.getYear()));
-//            }
-//        } else {
-//            if (date == null) {
-//                q = "SELECT * FROM TEST WHERE CARNUMBER = ? ";
-//                preparedSt = conn.prepareStatement(q);
-//                preparedSt.setString(1, carNumber);
-//            } else {
-//                q = "SELECT * FROM TEST WHERE CARNUMBER = ? AND DAY(TIMESTAMP)=? AND MONTH(TIMESTAMP)=? AND YEAR(TIMESTAMP)=?";
-//                preparedSt = conn.prepareStatement(q);
-//                preparedSt.setString(1, carNumber);
-//                preparedSt.setString(2, String.valueOf(date.getDayOfMonth()));
-//                preparedSt.setString(3, String.valueOf(date.getMonthValue()));
-//                preparedSt.setString(4, String.valueOf(date.getYear()));
-//            }
-//        }
         result = preparedSt.executeQuery();
 
         return result;

@@ -7,10 +7,6 @@ import java.io.IOException;
 
 @WebServlet(name = "Filter")
 public class Filter extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

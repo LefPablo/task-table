@@ -1,0 +1,36 @@
+.filter__form div {
+	padding-bottom: 15px;
+}
+
+.filter__form label {
+	display: inline-block;
+	min-width: 100px;
+	text-align: right;
+}
+
+.filter .inner {
+	display: inline-block;
+}
+
+.filter__form button {
+	padding: 10px 30px; 
+	width: 100%;
+	border-radius: 10px;
+}
+
+table {
+	width: 100%;
+	text-align: center;
+}
+
+th {
+	padding: 5px 10px;
+}
+
+tr:nth-child(2n+1) {
+	background-color: #fafafa;
+}
+
+td {
+	padding: 5px;
+}

@@ -1,0 +1,41 @@
+.new-task__form div:not(:last-child) {
+	padding-bottom: 15px;
+}
+
+.new-task__form label {
+	display: inline-block;
+	min-width: 100px;
+	text-align: right;
+}
+
+.new-task .inner {
+	display: inline-block;
+}
+
+.new-task__form .mainBtn {
+	padding: 10px 30px; 
+	width: 100%;
+	border-radius: 10px;
+}
+
+.new-task__form .secondBtn {
+	margin-top: 10px;
+	position: relative;
+	padding: 5px 20px; 
+	width: 40%;
+	border-radius: 10px;
+}
+
+.new-task__btn-second {
+	position: relative;
+}
+
+.new-task__form .secondBtn:last-child {
+	position: absolute;
+	right: 0;
+}
+
+.jqx-layout-group-auto-hide-content-vertical
+{
+    width: 200px;
+}

@@ -24,8 +24,6 @@ public class Controller {
         try {
             Date start = stringDateToSqlDate(startDate);
             Date end = stringDateToSqlDate(endDate);
-            System.out.println(start);
-            System.out.println(end);
             result = addTask(summary, assignee, start, end);
         } catch (SQLException e) {
             System.out.println(e);
@@ -109,4 +107,19 @@ public class Controller {
         return result;
     }
 
+    public static ResultSet tasksByFilters(String assignee, String startDate, String endDate) {
+        //parse string of date to Date format and call getTasksByFilters function
+        //return set of query result
+        ResultSet result = null;
+        try {
+            Date start = stringDateToSqlDate(startDate);
+            Date end = stringDateToSqlDate(endDate);
+            result = getTasksByFilters(assignee, start, end);
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (DateTimeParseException e) {
+            System.out.println(e);
+        }
+        return result;
+    }
 }

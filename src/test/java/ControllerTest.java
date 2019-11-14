@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeParseException;
 
 import static org.junit.Assert.*;
 
@@ -35,15 +36,13 @@ public class ControllerTest {
         String source1 = "Director of corp";
         String source2 = "Bob Tempo";
         String source3 = "10/11/2019";
-        String source4 = "21/11/2019";
+        String source4 = "21/1/1/2019";
 
         Boolean actual = true;
         Boolean expected = null;
-        try {
-            expected = Controller.addTaskToDb(source1, source2, source3, source4);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+//        expected = Controller.addTaskToDb(source1, source2, source3, source4);
+        expected = Controller.addTaskToDb(null, null, null, null);
+
         System.out.println("Actual:" + actual);
         System.out.println("Expected:" + expected);
         Assert.assertEquals(expected, actual);

@@ -18,7 +18,7 @@ public final class DataBase {
         try {   //getConnection("jdbc:h2:./Task", "sa", " "); //local db
             connection = DriverManager.getConnection("jdbc:h2:mem:test"); // in-memory db
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS TASKS(ID INT PRIMARY KEY AUTO_INCREMENT, SUMMARY VARCHAR(200), STARTDATE DATE, ENDDATE DATE, ASSIGNEE VARCHAR(100))");
+            statement.execute("CREATE TABLE IF NOT EXISTS TASKS(ID INT PRIMARY KEY AUTO_INCREMENT, SUMMARY VARCHAR(200) NOT NULL, STARTDATE DATE NOT NULL, ENDDATE DATE NOT NULL, ASSIGNEE VARCHAR(100) NOT NULL)");
         } catch (SQLException e) {
             System.out.println(e);
         }

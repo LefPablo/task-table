@@ -1,11 +1,12 @@
 import java.sql.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
+import java.time.format.*;
 
 
 public class Controller {
     public static boolean addTask(String summary, String assignee, Date startDate, Date endDate) throws SQLException {
         //connect to db and insert row
+        //return true if added success, else false
         Connection conn = DataBase.getDb().connection;
         String q = "insert into TASKS(SUMMARY, ASSIGNEE, STARTDATE, ENDDATE) values(?, ?, ?, ?)";
         PreparedStatement preparedSt = conn.prepareStatement(q);
@@ -16,14 +17,26 @@ public class Controller {
         return preparedSt.executeUpdate() != 0;
     }
 
-    public static boolean addTaskToDb(String summary, String assignee, String startDate, String endDate) throws SQLException {
-        Date start = stringDateToSqlDate(startDate);
-        Date end = stringDateToSqlDate(endDate);
-        addTask(summary, assignee, start, end);
-        return true;
+    public static boolean addTaskToDb(String summary, String assignee, String startDate, String endDate) {
+        //parse string of date to Date format and call addTask function
+        //if success return true else false
+        boolean result = false;
+        try {
+            Date start = stringDateToSqlDate(startDate);
+            Date end = stringDateToSqlDate(endDate);
+            System.out.println(start);
+            System.out.println(end);
+            result = addTask(summary, assignee, start, end);
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (DateTimeParseException e) {
+            System.out.println(e);
+        }
+        return result;
     }
 
     public static int countOfRecords() throws SQLException {
+        //return count of records in the table
         int count = 0;
         Connection conn = DataBase.getDb().connection;
         Statement st = conn.createStatement();
@@ -38,13 +51,12 @@ public class Controller {
         return count;
     }
 
-    public static Date stringDateToSqlDate (String source) {
+    public static Date stringDateToSqlDate (String source) throws DateTimeParseException {
+        //parse string date to SQL Date format
         String dataFormat = "dd/MM/yyyy";
         Date sqlDate = null;
         if (source != null) {
-            //parse date from request to localDate
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dataFormat);
-            //regular expression comparison
             sqlDate = Date.valueOf(
                     LocalDate.parse(source, formatter)
             );
@@ -57,7 +69,11 @@ public class Controller {
         PreparedStatement preparedSt = null;
         ResultSet result;
 
+        //formation of query
+        //initial set
         String q = "SELECT * FROM TASKS";
+
+        //adds values to query, if is multi condition then also adds "AND"
         boolean isMultiCondition = false;
         if (assignee != null || startDate != null || endDate != null) {
             q += " WHERE";
@@ -86,7 +102,7 @@ public class Controller {
                 q += (" ENDDATE<='" + endDate + "'");
             }
         }
-        System.out.println(q);
+        //make query to DB
         preparedSt = conn.prepareStatement(q);
         result = preparedSt.executeQuery();
 

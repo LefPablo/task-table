@@ -44,8 +44,6 @@ public class Controller {
         if(result.next()) {
             count = result.getInt(1);
         }
-
-        System.out.println(count);
         return count;
     }
 
@@ -60,6 +58,14 @@ public class Controller {
             );
         }
         return sqlDate;
+    }
+
+    public static ResultSet getListOfAssignees() throws SQLException {
+        Connection conn = DataBase.getDb().connection;
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery("SELECT DISTINCT ASSIGNEE FROM TASKS");
+
+        return result;
     }
 
     public static ResultSet getTasksByFilters(String assignee, Date startDate, Date endDate) throws SQLException {

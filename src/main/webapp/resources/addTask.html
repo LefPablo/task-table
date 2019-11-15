@@ -6,13 +6,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="general.css">
-    
-	<link rel="stylesheet" href="scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <link rel="stylesheet" href="scripts/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
-
-    <link rel="stylesheet" href="addTask.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css">
+    <link rel="stylesheet" href="jqwidgets/styles/jqx.arctic.css">
+    <link rel="stylesheet" href="css/addTask.css">
 </head>
 <body>
 	<div class="new-task">
@@ -29,52 +27,27 @@
 					</div>
 					<div class="new-task__startDate">
 						<label for="startDate">StartDate:</label>
-						<input id="startDate" type="text" placeholder="31/12/2000">
+						<input id="startDate" class="datepicker" type="date" placeholder="31/12/2000">
 					</div>
 					<div class="new-task__endDate">
 						<label for="endDate">EndDate:</label>
-						<input id="endDate" type="text" placeholder="31/12/2000">
+						<input id="endDate" class="datepicker" type="date" placeholder="31/12/2000">
 					</div>
 					<button type="submit" class="mainBtn">Add new Task</button>
-					<div class="new-task__btn-second">
+					<div class="new-task__btn-box">
 						<button type="reset" class="secondBtn">Reset</button>
-						<button type="button" class="secondBtn">Back</button>
+						<button type="button" class="secondBtn" onClick='location.href="index.html"'>Back</button>
 					</div>
-					<div id="calendar">
-         
-        			</div>
 				</div>
 			</form>
 		</div>
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- <script src="jqxcore.js"></script>
-<script src="jqxcalendar.js"></script> -->
-<!-- <script type="text/javascript" src="scripts/jquery/jquery-1.11.3.min.js"></script> -->
-<script type="text/javascript" src="scripts/jqwidgets/jqxcore.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxinput.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxcheckbox.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxeditor.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxtabs.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxdata.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxbuttons.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxswitchbutton.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxdropdownbutton.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxscrollbar.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxlistbox.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxdropdownlist.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxsplitter.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxdatatable.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxpanel.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxmenu.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxinput.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxpasswordinput.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxvalidator.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxwindow.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxnotification.js"></script>
-<script type="text/javascript" src="scripts/jqwidgets/jqxtooltip.js"></script>
-
-<script type="module" src="addTask.js"></script>
-
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="jqwidgets/jqxcore.js"></script>
+<script src="jqwidgets/jqxdatetimeinput.js"></script>
+<script src="jqwidgets/jqxcalendar.js"></script>
+<script src="jqwidgets/jqxtooltip.js"></script>
+<script src="jqwidgets/globalization/globalize.js"></script>
+<script src="js/addTask.js"></script>
 </body>
 </html>

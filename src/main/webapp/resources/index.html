@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="general.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 	<div class="filter">
@@ -16,11 +16,11 @@
 				<div class="filter__form">
 					<div class="filter__startDate">
 						<label for="startDate">StartDate:</label>
-						<input id="startDate" type="text" placeholder="31/12/2000">
+						<input id="startDate" class="datefield" type="text" placeholder="31/12/2000">
 					</div>
 					<div class="filter__endDate">
 						<label for="endDate">EndDate:</label>
-						<input id="endDate" type="text" placeholder="31/12/2000">
+						<input id="endDate" class="datefield" type="text" placeholder="31/12/2000">
 					</div>
 					<div class="filter__Assignee">
 						<label for="assignee">Assignee:</label>
@@ -33,16 +33,20 @@
 					</div>
 					<div class="filter__Period">
 						<label for="period">Period:</label>
-						<select name="" id="period">
-							<option value="">Last Quarter</option>
-							<option value="">Last Month</option>
-							<option value="">Last Week</option>
-							<option value="">Current Quarter to Date</option>
-							<option value="">Current Month to Date</option>
-							<option value="">Current Week to Date</option>
+						<select name="" id="period" onchange="period(this.value)">
+							<option value="custom">Custom</option>
+							<option value="lquarter">Last Quarter</option>
+							<option value="lmonth">Last Month</option>
+							<option value="lweek">Last Week</option>
+							<option value="cquarter">Current Quarter to Date</option>
+							<option value="cmonth">Current Month to Date</option>
+							<option value="cweek">Current Week to Date</option>
 						</select>
 					</div>
-					<button class="mainBtn">Find</button>
+					<div class="filter__btn-box">
+						<button class="secondBtn" onClick='location.href="addTask.html"'>Add</button>
+						<button class="mainBtn">Find</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -118,5 +122,9 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery.maskedinput.min.js"></script>
+	<script src="js/index.js"></script>
 </body>
 </html>

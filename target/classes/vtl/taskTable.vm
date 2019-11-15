@@ -1,0 +1,22 @@
+#* @vtlvariable name="taskArray" type="LinkedList<Task>" *#
+#* @vtlvariable name="task" type="Task" *#
+#if (!$taskArray.isEmpty())
+<table>
+    <thead>
+    <th id="taskId">Id</th>
+    <th id="taskSummary">Summary</th>
+    <th id="taskStartDate">StartDate</th>
+    <th id="taskEndDate">EndDate</th>
+    <th id="taskAssignee">Assignee</th>
+    </thead>
+    #foreach($task in $taskArray)
+        <tr>
+            <td>$task.getId()</td>
+            <td>$task.getSummary()</td>
+            <td>$task.getStartDate()</td>
+            <td>$task.getEndDate()</td>
+            <td>$task.getAssignee()</td>
+        </tr>
+    #end
+</table>
+#end

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="filter">
+		<div class="container">
+			<div class="inner">
+				<div class="filter__form">
+					<div class="filter__startDate">
+						<label for="startDate">StartDate:</label>
+						<input id="startDate" class="datefield" type="text" placeholder="31/12/2000">
+					</div>
+					<div class="filter__endDate">
+						<label for="endDate">EndDate:</label>
+						<input id="endDate" class="datefield" type="text" placeholder="31/12/2000">
+					</div>
+					<div class="filter__Assignee">
+						<label for="assignee">Assignee:</label>
+						<select name="" id="assignee">
+							#parse("./src/main/resources/vtl/assignee.vm")
+						</select>
+					</div>
+					<div class="filter__Period">
+						<label for="period">Period:</label>
+						<select name="" id="period" onchange="period(this.value)">
+							<option value="custom">Custom</option>
+							<option value="lquarter">Last Quarter</option>
+							<option value="lmonth">Last Month</option>
+							<option value="lweek">Last Week</option>
+							<option value="cquarter">Current Quarter to Date</option>
+							<option value="cmonth">Current Month to Date</option>
+							<option value="cweek">Current Week to Date</option>
+						</select>
+					</div>
+					<div class="filter__btn-box">
+						<button class="secondBtn" onClick='location.href="addTask.html"'>Add</button>
+						<button class="mainBtn">Find</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="result">
+		<div class="container">
+			<div class="inner">
+				#parse("./src/main/resources/vtl/taskTable.vm")
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery.maskedinput.min.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>

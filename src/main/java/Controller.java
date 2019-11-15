@@ -2,6 +2,14 @@ import java.sql.*;
 import java.time.*;
 import java.time.format.*;
 
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.LinkedList;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+
 
 public class Controller {
     public static boolean addTask(String summary, String assignee, Date startDate, Date endDate) throws SQLException {
@@ -127,5 +135,54 @@ public class Controller {
             System.out.println(e);
         }
         return result;
+    }
+
+    public static String getIndexPage(String assignee, String startDate, String endDate) {
+
+        LinkedList<String> assigneeArray = new LinkedList<String>();
+        LinkedList<Task> taskArray = new LinkedList<Task>();
+        ResultSet assignees = null;
+        ResultSet tasks = null;
+        try {
+            assignees = getListOfAssignees();
+            while(assignees.next()) {
+                assigneeArray.add(assignees.getString(1));
+            }
+            tasks = tasksByFilters(assignee, startDate, endDate);
+            while(tasks.next()) {
+                Task task = new Task(tasks.getInt(1), tasks.getString(2), tasks.getString(3), tasks.getString(4), tasks.getString(5));
+                taskArray.add(task);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return vtlIndexPage(assigneeArray, taskArray);
+    }
+
+    public static String getIndexPage() {
+        LinkedList<String> assigneeArray = new LinkedList<String>();
+        LinkedList<Task> taskArray = new LinkedList<Task>();
+        ResultSet assignees = null;
+        try {
+            assignees = getListOfAssignees();
+            while(assignees.next()) {
+                assigneeArray.add(assignees.getString(1));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return vtlIndexPage(assigneeArray, taskArray);
+    }
+
+    private static String vtlIndexPage(LinkedList<String> assigneeArray, LinkedList<Task> taskArray) {
+        Velocity.init();
+        Template t = Velocity.getTemplate("./src/main/resources/vtl/index.vm");
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("taskArray", taskArray);
+        ctx.put("assigneeArray", assigneeArray);
+        Writer writer = new StringWriter();
+        t.merge(ctx, writer);
+        System.out.println(writer);
+        return writer.toString();
     }
 }

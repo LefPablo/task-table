@@ -100,6 +100,8 @@ public class ControllerTest {
         try {
             Controller.addTaskToDb(source1, source2, source3, source4);
             Controller.addTaskToDb(source1, source2, "13/11/2019", "21/11/2019");
+            Controller.addTaskToDb(source1, "Tom", "13/11/2019", "21/11/2019");
+            Controller.addTaskToDb(source1, "Emmy", "13/11/2019", "21/11/2019");
             result = Controller.getTasksByFilters(null, start, end);
 
             while (result.next()) {
@@ -112,5 +114,30 @@ public class ControllerTest {
 //        System.out.println("Actual:" + actual);
 //        System.out.println("Expected:" + expected);
 //        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getIndexPage() {
+        getTasksByFilters();
+        Controller.getIndexPage();
+    }
+
+    @Test
+    public void getIndexPageFilter() {
+        getTasksByFilters();
+        Controller.getIndexPage(null,null,null);
+    }
+
+    @Test
+    public void getListOfAssignees() {
+        getTasksByFilters();
+        try {
+            ResultSet result = Controller.getListOfAssignees();
+            while(result.next()) {
+                System.out.println(result.getString(1));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

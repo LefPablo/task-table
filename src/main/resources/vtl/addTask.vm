@@ -1,0 +1,57 @@
+#* @vtlvariable name="contextPath" type="String" *#
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="$contextPath/resources/css/normalize.css">
+    <link rel="stylesheet" href="$contextPath/resources/css/general.css">
+    <link rel="stylesheet" href="$contextPath/resources/jqwidgets/styles/jqx.base.css">
+    <link rel="stylesheet" href="$contextPath/resources/jqwidgets/styles/jqx.arctic.css">
+    <link rel="stylesheet" href="$contextPath/resources/css/addTasks.css">
+</head>
+<body>
+	<div class="addtask">
+		<div class="container">
+			<div class="inner">
+				<form id="addtask" class="addtask__form">
+					<div class="addtask__summary">
+						<label for="summary">Summary:</label>
+						<input id="summary" name="summary" type="text" required>
+					</div>
+					<div class="addtask__assignee">
+						<label for="assignee">Assignee:</label>
+						<input id="assignee" name="assignee" type="text" required>
+					</div>
+					<div class="addtask__startDate">
+						<label for="startDate">StartDate:</label>
+						<div id="startDate" class="datepicker">
+						</div>
+					</div>
+					<div class="addtask__endDate">
+						<label for="endDate">EndDate:</label>
+						<div id="endDate" class="datepicker">
+						</div>
+					</div>
+					<button type="button" onclick="createTask()" class="mainBtn">Add new Task</button>
+					<div class="addtask__btn-box">
+						<button type="reset" class="secondBtn">Reset</button>
+						<button type="button" class="secondBtn" onClick='location.href="$contextPath/api/filter"'>Back</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<script src="$contextPath/resources/js/jquery-3.4.1.min.js"></script>
+<script src="$contextPath/resources/jqwidgets/jqxcore.js"></script>
+<script src="$contextPath/resources/jqwidgets/jqxdatetimeinput.js"></script>
+<script src="$contextPath/resources/jqwidgets/jqxcalendar.js"></script>
+<script src="$contextPath/resources/jqwidgets/jqxtooltip.js"></script>
+<script src="$contextPath/resources/jqwidgets/globalization/globalize.js"></script>
+<script src="$contextPath/resources/js/addTask.js"></script>
+</body>
+</html>

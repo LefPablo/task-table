@@ -1,12 +1,13 @@
 $(document).ready(function () {
 	$(".datefield").mask("99/99/9999");
+
 });
 
-function period(n) {
-	let date = new Date();
-	let startDate;
-	let endDate;
-	let dayOfWeek = (date.getDay() + 6)%7; //day of week, start from monday(0) sunday(6)
+function periods(n) {
+	var date = new Date();
+	var startDate;
+	var endDate;
+	var dayOfWeek = (date.getDay() + 6)%7; //day of week, start from monday(0) sunday(6)
 	switch(n) {
 		case "lquarter":
 			startDate = new Date(date.getFullYear(),Math.floor(date.getMonth()/3 - 1) * 3);
@@ -35,21 +36,40 @@ function period(n) {
 	}
 	// date or month "4" format make to "04"
 	// else mask clear line
-	let formatXX = n => {
-		let prefix = "";
+	var formatXX = function(n) {
+		var prefix = "";
 		if (Math.floor(n/10) == 0) {
 			prefix = "0";
 		}
 		return prefix + n; 
 	};
-	let mmFormat = formatXX(startDate.getMonth() + 1);
-	let ddFormat = formatXX(startDate.getDate());
-	let year = startDate.getFullYear()
-	let startText = ddFormat + "/" + mmFormat + "/" + year;
-	mmFormat = formatXX(endDate.getMonth() + 1);
-	ddFormat = formatXX(endDate.getDate());
-	year = endDate.getFullYear()
-	let endText = ddFormat + "/" + mmFormat + "/" + year;
+	var startText = "";
+	var endText = "";
+	if (n != "custom") {
+		var mmFormat = formatXX(startDate.getMonth() + 1);
+		var ddFormat = formatXX(startDate.getDate());
+		var year = startDate.getFullYear()
+		startText = ddFormat + "/" + mmFormat + "/" + year;
+		mmFormat = formatXX(endDate.getMonth() + 1);
+		ddFormat = formatXX(endDate.getDate());
+		year = endDate.getFullYear()
+		endText = ddFormat + "/" + mmFormat + "/" + year;
+	}
 	$("#startDate").val(startText);
 	$("#endDate").val(endText);
+}
+
+function getTasks() {
+	var xhr = new XMLHttpRequest();
+	var form = document.forms.filter;
+
+	var formData = {
+		assignee: form.assignee.value,
+		startDate: form.startDate.value,
+		endDate: form.endDate.value
+	};
+
+	var url = '/TaskTable/api/addTask';
+
+	location.href = "/TaskTable/api/filter?assignee="+formData.assignee+"&startDate="+formData.startDate+"&endDate="+formData.endDate;
 }

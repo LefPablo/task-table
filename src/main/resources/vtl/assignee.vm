@@ -1,5 +1,6 @@
 #* @vtlvariable name="assigneeArray" type="LinkedList<String>" *#
 #* @vtlvariable name="assignee" type="String" *#
+<option value="">All assignees</option>
 #foreach($assignee in $assigneeArray)
 <option value="$assignee">$assignee</option>
 #end

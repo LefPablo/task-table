@@ -1,3 +1,4 @@
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,25 @@ import org.json.simple.parser.ParseException;
 
 @WebServlet(name = "AddTask")
 public class AddTask extends HttpServlet {
+    static private ServletConfig config;
+    public void init (ServletConfig config) throws ServletException
+    {
+        this.config = config;
+    }
+
+    static public String getContextPath() {
+        return config.getServletContext().getContextPath();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter writer = response.getWriter();
+
+        String result = Controller.getAddPage();
+
+        response.setStatus(200);
+        writer.println(result);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter writer = response.getWriter();
         JSONObject jsonResponse = new JSONObject();

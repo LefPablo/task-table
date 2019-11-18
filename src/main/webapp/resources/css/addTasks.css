@@ -1,39 +1,39 @@
-.new-task {
+.addtask {
 	padding-top: 10px;
 }
 
-.new-task__form div:not(:last-child) {
+.addtask__form div:not(:last-child) {
 	padding-bottom: 15px;
 }
 
-.new-task__form label {
+.addtask__form label {
 	display: inline-block;
 	min-width: 100px;
 	text-align: right;
 }
 
-.new-task .inner {
+.addtask .inner {
 	display: inline-block;
 }
 
-.new-task__form .mainBtn {
+.addtask__form .mainBtn {
 	padding: 10px 30px; 
 	width: 100%;
 	border-radius: 10px;
 }
 
-.new-task__form .secondBtn {
+.addtask__form .secondBtn {
 	margin-top: 10px;
 	padding: 5px 20px; 
 	width: 40%;
 	border-radius: 10px;
 }
 
-.new-task__btn-box {
+.addtask__btn-box {
 	position: relative;
 }
 
-.new-task__btn-box .secondBtn:last-child {
+.addtask__btn-box .secondBtn:last-child {
 	position: absolute;
 	right: 0;
 }

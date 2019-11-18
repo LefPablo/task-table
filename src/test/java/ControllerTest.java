@@ -48,27 +48,6 @@ public class ControllerTest {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test //used when data base in-memory mod
-    public void countOfRecords() {
-        String source1 = "Director of corp";
-        String source2 = "Bob Tempo";
-        String source3 = "10/11/2019";
-        String source4 = "21/11/2019";
-
-        int actual = 2;
-        int expected = 0;
-        try {
-            Controller.addTaskToDb(source1, source2, source3, source4);
-            Controller.addTaskToDb(source1, source2, source3, source4);
-            expected = Controller.countOfRecords();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        System.out.println("Actual:" + actual);
-        System.out.println("Expected:" + expected);
-        Assert.assertEquals(expected, actual);
-    }
-
     @Test
     public void stringDateToSqlDate() {
         String source = "10/11/2019";
@@ -114,18 +93,6 @@ public class ControllerTest {
 //        System.out.println("Actual:" + actual);
 //        System.out.println("Expected:" + expected);
 //        Assert.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void getIndexPage() {
-        getTasksByFilters();
-        Controller.getIndexPage();
-    }
-
-    @Test
-    public void getIndexPageFilter() {
-        getTasksByFilters();
-        Controller.getIndexPage(null,null,null);
     }
 
     @Test

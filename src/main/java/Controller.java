@@ -1,10 +1,10 @@
+import java.io.*;
 import java.sql.*;
 import java.time.*;
 import java.time.format.*;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -81,15 +81,19 @@ public class Controller {
         PreparedStatement preparedSt = null;
         ResultSet result;
 
+        //to avoid Exception NullPointerException
+        if (assignee == null) {
+            assignee = "";
+        }
+
         //formation of query
         //initial set
         String q = "SELECT * FROM TASKS";
-
         //adds values to query, if is multi condition then also adds "AND"
         boolean isMultiCondition = false;
-        if (assignee != null || startDate != null || endDate != null) {
+        if (!assignee.isEmpty() || startDate != null || endDate != null) {
             q += " WHERE";
-            if (assignee != null) {
+            if (!assignee.isEmpty()) {
                 if (isMultiCondition) {
                     q += " AND";
                 } else {
@@ -125,33 +129,44 @@ public class Controller {
         //parse string of date to Date format and call getTasksByFilters function
         //return set of query result
         ResultSet result = null;
+        Date start = null;
+        Date end = null;
+        //if cannot to parse string, then ignore this parameter in query (equal null)
         try {
-            Date start = stringDateToSqlDate(startDate);
-            Date end = stringDateToSqlDate(endDate);
+            start = stringDateToSqlDate(startDate);
+        } catch (DateTimeParseException e) {
+            System.out.println(e);
+        }
+        try {
+            end = stringDateToSqlDate(endDate);
+        } catch (DateTimeParseException e) {
+            System.out.println(e);
+        }
+        try {
             result = getTasksByFilters(assignee, start, end);
         } catch (SQLException e) {
-            System.out.println(e);
-        } catch (DateTimeParseException e) {
             System.out.println(e);
         }
         return result;
     }
 
-    public static String getIndexPage(String assignee, String startDate, String endDate) {
+    public static String getIndexPage(ResultSet tasks) {
 
         LinkedList<String> assigneeArray = new LinkedList<String>();
         LinkedList<Task> taskArray = new LinkedList<Task>();
         ResultSet assignees = null;
-        ResultSet tasks = null;
         try {
             assignees = getListOfAssignees();
-            while(assignees.next()) {
-                assigneeArray.add(assignees.getString(1));
+            if (assignees != null) {
+                while(assignees.next()) {
+                    assigneeArray.add(assignees.getString(1));
+                }
             }
-            tasks = tasksByFilters(assignee, startDate, endDate);
-            while(tasks.next()) {
-                Task task = new Task(tasks.getInt(1), tasks.getString(2), tasks.getString(3), tasks.getString(4), tasks.getString(5));
-                taskArray.add(task);
+            if (tasks != null) {
+                while(tasks.next()) {
+                    Task task = new Task(tasks.getInt(1), tasks.getString(2), tasks.getString(3), tasks.getString(4), tasks.getString(5));
+                    taskArray.add(task);
+                }
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -160,29 +175,40 @@ public class Controller {
     }
 
     public static String getIndexPage() {
-        LinkedList<String> assigneeArray = new LinkedList<String>();
-        LinkedList<Task> taskArray = new LinkedList<Task>();
-        ResultSet assignees = null;
-        try {
-            assignees = getListOfAssignees();
-            while(assignees.next()) {
-                assigneeArray.add(assignees.getString(1));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return vtlIndexPage(assigneeArray, taskArray);
+        return getIndexPage(null);
     }
 
     private static String vtlIndexPage(LinkedList<String> assigneeArray, LinkedList<Task> taskArray) {
-        Velocity.init();
-        Template t = Velocity.getTemplate("./src/main/resources/vtl/index.vm");
+        Properties props = new Properties();
+        props.put("resource.loader", "class");
+        props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+        Velocity.init(props);
+        String url = "/vtl/index.vm";
+        Template t = Velocity.getTemplate(url);
+
         VelocityContext ctx = new VelocityContext();
         ctx.put("taskArray", taskArray);
         ctx.put("assigneeArray", assigneeArray);
+        ctx.put("contextPath", Filter.getContextPath());
         Writer writer = new StringWriter();
         t.merge(ctx, writer);
-        System.out.println(writer);
+        return writer.toString();
+    }
+
+    public static String getAddPage() {
+        Properties props = new Properties();
+        props.put("resource.loader", "class");
+        props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+        Velocity.init(props);
+        String url = "/vtl/addTask.vm";
+        Template t = Velocity.getTemplate(url);
+
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("contextPath", Filter.getContextPath());
+        Writer writer = new StringWriter();
+        t.merge(ctx, writer);
         return writer.toString();
     }
 }

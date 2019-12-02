@@ -13,30 +13,30 @@
     <link rel="stylesheet" href="css/addTasks.css">
 </head>
 <body>
-	<div class="newtask">
+	<div class="addtask">
 		<div class="container">
 			<div class="inner">
-				<form id="newtask" onsubmit="createTask()" action="#" class="newtask__form">
-					<div class="newtask__summary">
+				<form id="addtask" action="http://localhost:8099/TaskTable/api/addTask" method="POST" class="addtask__form">
+					<div class="addtask__summary">
 						<label for="summary">Summary:</label>
 						<input id="summary" name="summary" type="text" placeholder="Tom" required>
 					</div>
-					<div class="newtask__assignee">
+					<div class="addtask__assignee">
 						<label for="assignee">Assignee:</label>
 						<input id="assignee" name="assignee" type="text" placeholder="Tom" required>
 					</div>
-					<div class="newtask__startDate">
+					<div class="addtask__startDate">
 						<label for="startDate">StartDate:</label>
-						<div id="startDate" class="datepicker">
+						<div id="startDate" name="startDate" class="datepicker">
 						</div>
 					</div>
-					<div class="newtask__endDate">
+					<div class="addtask__endDate">
 						<label for="endDate">EndDate:</label>
-						<div id="endDate" class="datepicker">
+						<div id="endDate" name="endDate" class="datepicker">
 						</div>
 					</div>
-					<button type="button" onclick="createTask()" class="mainBtn">Add new Task</button>
-					<div class="newtask__btn-box">
+					<button type="submit" class="mainBtn">Add new Task</button>
+					<div class="addtask__btn-box">
 						<button type="reset" class="secondBtn">Reset</button>
 						<button type="button" class="secondBtn" onClick='location.href="index.html"'>Back</button>
 					</div>

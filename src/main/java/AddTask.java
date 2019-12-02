@@ -1,4 +1,6 @@
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,19 +41,26 @@ public class AddTask extends HttpServlet {
         JSONObject jsonResponse = new JSONObject();
 
         //get request body and parse body to json
-        String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        JSONObject json = null;
-        try {
-            json = (JSONObject) new JSONParser().parse(body);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+//        JSONObject json = null;
+//        try {
+//            json = (JSONObject) new JSONParser().parse(body);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
         //get values from json
-        String summary = json.get("summary").toString();
-        String assignee = json.get("assignee").toString();
-        String startDate = json.get("startDate").toString();
-        String endDate = json.get("endDate").toString();
+//        String summary = json.get("summary").toString();
+//        String assignee = json.get("assignee").toString();
+//        String startDate = json.get("startDate").toString();
+//        String endDate = json.get("endDate").toString();
+
+        //get values from request
+        String summary = request.getParameter("summary");
+        String assignee = request.getParameter("assignee");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String result = "";
 
         //if data added success then status 200 else 500
         if (Controller.addTaskToDb(summary, assignee, startDate, endDate)) {
@@ -59,7 +68,8 @@ public class AddTask extends HttpServlet {
             System.out.println("success");
             jsonResponse.put("Status", response.getStatus());
             jsonResponse.put("Message", "Data successfully added to DB");
-            writer.println(jsonResponse);
+            result = Controller.getIndexPage();
+            writer.println(result);
         } else {
             response.setStatus(500);
             System.out.println("fail");
@@ -67,6 +77,5 @@ public class AddTask extends HttpServlet {
             jsonResponse.put("Message", "Error, invalid data or SQL request is failed. More details on the server.");
             writer.println(jsonResponse);
         }
-        writer.close();
     }
 }

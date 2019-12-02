@@ -69,7 +69,12 @@ function getTasks() {
 		endDate: form.endDate.value
 	};
 
-	var url = '/TaskTable/api/addTask';
-
-	location.href = "/TaskTable/api/filter?assignee="+formData.assignee+"&startDate="+formData.startDate+"&endDate="+formData.endDate;
+	//validate date fields
+	try {
+		new Date(formData.startDate).toISOString();
+		new Date(formData.endDate).toISOString();
+		location.href = "/TaskTable/api/filter?assignee="+formData.assignee+"&startDate="+formData.startDate+"&endDate="+formData.endDate;
+	} catch (e) {
+		alert("Date is invalid");
+	}
 }

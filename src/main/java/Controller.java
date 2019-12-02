@@ -164,7 +164,7 @@ public class Controller {
             }
             if (tasks != null) {
                 while(tasks.next()) {
-                    Task task = new Task(tasks.getInt(1), tasks.getString(2), tasks.getString(3), tasks.getString(4), tasks.getString(5));
+                    Task task = new Task(tasks.getInt(1), tasks.getString(2), tasks.getString(5), tasks.getString(3), tasks.getString(4));
                     taskArray.add(task);
                 }
             }

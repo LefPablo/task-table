@@ -18,7 +18,7 @@
 	<div class="addtask">
 		<div class="container">
 			<div class="inner">
-				<form id="addtask" class="addtask__form">
+				<form id="addtask" method="POST" action="$contextPath/api/addTask" class="addtask__form">
 					<div class="addtask__summary">
 						<label for="summary">Summary:</label>
 						<input id="summary" name="summary" type="text" required>
@@ -29,15 +29,15 @@
 					</div>
 					<div class="addtask__startDate">
 						<label for="startDate">StartDate:</label>
-						<div id="startDate" class="datepicker">
+						<div id="startDate" name="startDate" class="datepicker">
 						</div>
 					</div>
 					<div class="addtask__endDate">
 						<label for="endDate">EndDate:</label>
-						<div id="endDate" class="datepicker">
+						<div id="endDate" name="endDate" class="datepicker">
 						</div>
 					</div>
-					<button type="button" onclick="createTask()" class="mainBtn">Add new Task</button>
+					<button type="submit" class="mainBtn">Add new Task</button>
 					<div class="addtask__btn-box">
 						<button type="reset" class="secondBtn">Reset</button>
 						<button type="button" class="secondBtn" onClick='location.href="$contextPath/api/filter"'>Back</button>

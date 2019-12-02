@@ -45,7 +45,6 @@ public class Filter extends HttpServlet {
             ResultSet set = Controller.tasksByFilters(assignee, startDate, endDate);
             result = Controller.getIndexPage(set);
         }
-//        response.setContentType("application/text; charset=utf-8");
 
         //send ready page
         response.setStatus(200);
